@@ -9,26 +9,54 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+        body {
+            font-size: 17px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
         #signature-preview {
             margin-top: 30px;
-	    text-align: center;
+            text-align: center;
             position: relative;
-            width: 1060px; /* Set the width of your signature */
+            width: 1050px; /* Set the width of your signature */
             height: 200px; /* Set the height of your signature */
-            background-image: url('PHOTO-AlqadsiahEmailSignature.jpg'); /* Static image background */
+            background-image: url("https://example.com/path-to-your-image.jpg"); /* Use a valid image URL */
             background-size: cover;
             border: 1px solid #ccc;
         }
         .signature-text {
             margin-top: 30px;
-	    top: 5%;
-    	    left: 15%;
-	    position: relative;
-	    text-align: left;
+            top: 5%;
+            left: 13.8%;
+            position: relative;
+            text-align: left;
             color: yellow; /* Change color based on your background */
             padding: 10px;
         }
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 20px; /* Add space above the button */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+        .download-button:hover {
+            background-color: #0056b3;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -52,7 +80,9 @@
 <div id="signature-preview">
     <div class="signature-text" id="signature-output"></div>
 </div>
- 
+
+<button id="downloadBtn" class="download-button" disabled>Download Signature as Image</button>
+
 <script>
     function generateSignature() {
         const name = document.getElementById('name').value;
@@ -62,12 +92,25 @@
 
         const signatureOutput = document.getElementById('signature-output');
         signatureOutput.innerHTML = `
-            <strong>${name}</strong><br>
-            ${title}<br>
-            <a href="mailto:${email}" style="color: white;">${email}</a><br>
-            ${phone}
+            <strong>${name}</strong><br><br>
+            <span style="color: yellow;">${title}</span><br>
+            <span style="color: yellow;">${email}</span> | 
+            <span style="color: yellow;">${phone}</span>
         `;
+
+        // Enable the download button after generating the signature
+        document.getElementById('downloadBtn').disabled = false;
     }
+
+    // Function to download the image
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        html2canvas(document.getElementById('signature-preview')).then(function(canvas) {
+            const downloadLink = document.createElement('a');
+            downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.download = "signature.png"; // Set the filename
+            downloadLink.click(); // Trigger the download
+        });
+    });
 </script>
 
 </body>
