@@ -21,14 +21,13 @@
             text-align: center;
             margin-top: 20px;
         }
-
         #signature-preview {
             margin-top: 30px;
             text-align: center;
             position: relative;
             width: 1050px; /* Set the width of your signature */
             height: 200px; /* Set the height of your signature */
-            background-image: url('PHOTO-AlqadsiahEmailSignature.jpg'); /* Static image background */
+            background-image: url('PHOTO-AlqadsiahEmailSignature.jpg'); /* Use a valid image URL */
             background-size: cover;
             border: 1px solid #ccc;
         }
@@ -51,12 +50,13 @@
             text-decoration: none;
             font-size: 16px;
             margin-top: 20px; /* Add space above the button */
+            cursor: pointer; /* Change cursor to pointer */
         }
         .download-button:hover {
             background-color: #0056b3;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -81,7 +81,7 @@
     <div class="signature-text" id="signature-output"></div>
 </div>
 
-<button id="downloadBtn" class="download-button">Download Signature as Image</button>
+<button id="downloadBtn" class="download-button" disabled>Download Signature as Image</button>
 
 <script>
     function generateSignature() {
@@ -93,11 +93,13 @@
         const signatureOutput = document.getElementById('signature-output');
         signatureOutput.innerHTML = `
             <strong>${name}</strong><br><br>
-            <a ${title}" style="color: white;">${title}</a>            
-            <br>
-            <a ${email}" style="color: yellow;">${email}</a> |
-            ${phone}
+            <span style="color: white;">${title}</span><br>
+            <span style="color: yellow;">${email}</span> | 
+            <span style="color: yellow;">${phone}</span>
         `;
+
+        // Enable the download button after generating the signature
+        document.getElementById('downloadBtn').disabled = false;
     }
 
     // Function to download the image
